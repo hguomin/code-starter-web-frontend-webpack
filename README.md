@@ -57,10 +57,10 @@ The web frontend starter project with webpack and typescript
     then open the dist\index.html in any browser to see result, you should see the "hello world" in the page
 
 ## STEP-2: Add multiple bundle environment support
-1. Move the content of the STEP-1 webpack.config.js a new created webpack.common.js in ./webpack folder, this file will contain common configuration in all environment
+1. Move the content of the STEP-1 webpack.config.js a new created webpack.common.js, this file will contain common configuration in all environment
 2. Change webpack.config.js to load different environment configuration by exporting a configuration function as below:
     ```javascript
-    const common = require("./.webpack/webpack.common");
+    const common = require("./webpack.common");
     const { merge } = require("webpack-merge");
 
     /*
@@ -73,17 +73,17 @@ The web frontend starter project with webpack and typescript
             return null;
         }
 
-        return merge(common, require(`./.webpack/webpack.${argv.mode}`));
+        return merge(common, require(`./webpack.${argv.mode}`));
     };
     ```
-3. Create a new webpack.development.js for development specific configuration in .webpack folder
+3. Create a new webpack.development.js for development specific configuration
     ```javascript
     console.log("development environment...");
     module.exports = {
     
     }
     ```
-4. Create a new webpack.production.js for production specific configuration in .webpack folder
+4. Create a new webpack.production.js for production specific configuration
     ```javascript
     console.log("production environment...");
     module.exports = {
@@ -99,5 +99,21 @@ The web frontend starter project with webpack and typescript
     },
     ```
 
-## SETP-3: Add application configurations
+## SETP-3: Use Dev Server
+1. Add webpack-dev-server dependency
+    ```bash
+    npm install webpack-dev-server --save-dev
+    ```
+2. Add dev server configuration in .webpack/webpack.common.js
+    ```javascript
+    module.exports = {
+    //...
+    devServer: {
+            contentBase: path.join(__dirname, '/../dist'),
+            compress: true,
+            port: 8080,
+        },
+    };
+    ```
+## SETP-4: Add application configurations
 1. Use this web site to get such configuration: https://createapp.dev/webpack

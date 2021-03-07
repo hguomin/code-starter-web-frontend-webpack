@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const { argv } = require('process');
 
+console.log(__dirname);
 
 const config = {
     entry: './src/app.js',
