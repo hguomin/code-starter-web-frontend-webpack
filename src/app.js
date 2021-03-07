@@ -1,3 +1,3 @@
 window.onload = function(){
-    document.write("hello world.");
+    document.write("hello world...");
 }

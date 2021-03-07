@@ -109,11 +109,24 @@ The web frontend starter project with webpack and typescript
     module.exports = {
     //...
     devServer: {
-            contentBase: path.join(__dirname, '/../dist'),
+            contentBase: path.join(__dirname, 'dist'),
+            hot: true,
+            open: true,
             compress: true,
-            port: 8080,
+            port: 8888,
         },
     };
     ```
+3. Change the build commands in scripts section in package.json
+    ```bash
+    "scripts": {
+        "build": "webpack --mode=production",
+        "debug": "webpack serve --mode=development",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    ```
+    it use the 'webpack serve' to start webpack-dev-server
+4. Run 'npm run debug' to start, it will open localhost:8888 automatically in browser
+
 ## SETP-4: Add application configurations
 1. Use this web site to get such configuration: https://createapp.dev/webpack
