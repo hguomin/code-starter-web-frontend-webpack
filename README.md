@@ -55,3 +55,49 @@ The web frontend starter project with webpack and typescript
     npm run build
     ```
     then open the dist\index.html in any browser to see result, you should see the "hello world" in the page
+
+## STEP-2: Add multiple bundle environment support
+1. Move the content of the STEP-1 webpack.config.js a new created webpack.common.js, this file will contain common configuration in all environment
+2. Change webpack.config.js to load different environment configuration by exporting a configuration function as below:
+    ```javascript
+    const common = require("./webpack.common");
+    const { merge } = require("webpack-merge");
+
+    /*
+    *env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
+    *argv, all cli arguments: { mode: 'development', env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true } }
+    */
+    module.exports = function(env, argv) {
+        if(typeof argv.mode === 'undefined') {
+            console.log('please specify the \'mode\' argument like \'--mode=production\'');
+            return null;
+        }
+
+        return merge(common, require(`./webpack.${argv.mode}`));
+    };
+    ```
+3. Create a new webpack.development.js for development specific configuration
+    ```javascript
+    console.log("development environment...");
+    module.exports = {
+    
+    }
+    ```
+4. Create a new webpack.production.js for production specific configuration
+    ```javascript
+    console.log("production environment...");
+    module.exports = {
+
+    }
+    ```
+5. Change the build commands in scripts section in package.json
+    ```bash
+    "scripts": {
+        "build": "webpack --mode=production",
+        "debug": "webpack --mode=development",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    ```
+
+## SETP-3: Add application configurations
+1. Use this web site to get such configuration: https://createapp.dev/webpack

@@ -1,12 +1,15 @@
-const webpack = require('webpack');
-const path = require('path');
+const common = require("./webpack.common");
+const { merge } = require("webpack-merge");
 
-const config = {
-  entry: './src/app.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
-  }
+/*
+ *env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
+ *argv, all cli arguments: { mode: 'development', env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true } }
+*/
+module.exports = function(env, argv) {
+    if(typeof argv.mode === 'undefined') {
+        console.log('please specify the \'mode\' argument like \'--mode=production\'');
+        return null;
+    }
+
+    return merge(common, require(`./webpack.${argv.mode}`));
 };
-
-module.exports = config;
