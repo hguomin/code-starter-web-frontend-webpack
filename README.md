@@ -57,10 +57,10 @@ The web frontend starter project with webpack and typescript
     then open the dist\index.html in any browser to see result, you should see the "hello world" in the page
 
 ## STEP-2: Add multiple bundle environment support
-1. Move the content of the STEP-1 webpack.config.js a new created webpack.common.js, this file will contain common configuration in all environment
+1. Move the content of the STEP-1 webpack.config.js a new created webpack.common.js in ./webpack folder, this file will contain common configuration in all environment
 2. Change webpack.config.js to load different environment configuration by exporting a configuration function as below:
     ```javascript
-    const common = require("./webpack.common");
+    const common = require("./.webpack/webpack.common");
     const { merge } = require("webpack-merge");
 
     /*
@@ -73,17 +73,17 @@ The web frontend starter project with webpack and typescript
             return null;
         }
 
-        return merge(common, require(`./webpack.${argv.mode}`));
+        return merge(common, require(`./.webpack/webpack.${argv.mode}`));
     };
     ```
-3. Create a new webpack.development.js for development specific configuration
+3. Create a new webpack.development.js for development specific configuration in .webpack folder
     ```javascript
     console.log("development environment...");
     module.exports = {
     
     }
     ```
-4. Create a new webpack.production.js for production specific configuration
+4. Create a new webpack.production.js for production specific configuration in .webpack folder
     ```javascript
     console.log("production environment...");
     module.exports = {

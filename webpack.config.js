@@ -1,4 +1,4 @@
-const common = require("./webpack.common");
+const common = require("./.webpack/webpack.common");
 const { merge } = require("webpack-merge");
 
 /*
@@ -11,5 +11,5 @@ module.exports = function(env, argv) {
         return null;
     }
 
-    return merge(common, require(`./webpack.${argv.mode}`));
+    return merge(common, require(`./.webpack/webpack.${argv.mode}`));
 };
