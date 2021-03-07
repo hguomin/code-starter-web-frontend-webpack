@@ -1,0 +1,30 @@
+{
+  "name": "code-starter-web-frontend-webpack",
+  "version": "0.0.1",
+  "description": "The web frontend starter project with webpack and typescript.",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hguomin/code-starter-web-frontend-webpack.git"
+  },
+  "keywords": [
+    "web",
+    "frontend",
+    "webpack",
+    "typescript"
+  ],
+  "author": "Guomin Huang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hguomin/code-starter-web-frontend-webpack/issues"
+  },
+  "homepage": "https://github.com/hguomin/code-starter-web-frontend-webpack#readme",
+  "devDependencies": {
+    "webpack": "^5.24.3",
+    "webpack-cli": "^4.5.0"
+  }
+}
