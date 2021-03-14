@@ -104,8 +104,9 @@ The web frontend starter project with webpack and typescript
     ```bash
     npm install webpack-dev-server --save-dev
     ```
-2. Add dev server configuration in .webpack/webpack.common.js
+2. Add dev server configuration in .webpack/webpack.development.js
     ```javascript
+    const path = require('path');
     module.exports = {
     //...
     devServer: {
@@ -156,5 +157,46 @@ The web frontend starter project with webpack and typescript
     ```
 5. Run 'npm build' commond will generate both of the app.bundle.js and index.html as output files
 
-## STEP-5: Add application configurations
+## STEP-5: Use Typescript for development
+1. Add typescript development tools
+    ```bash
+    npm install --save-dev typescript babel-loader  @babel/core @babel/cli @babel/plugin-proposal-class-properties @babel/preset-env @babel/preset-typescript
+    ```
+    Here we use typescript for type checking, and use babel to compile typescritp to javascript
+
+2. Create initial configuration for typescript
+    ```bash
+     tsc --init --declaration --allowSyntheticDefaultImports --noEmit --sourceMap --target esnext --outDir "dist"
+    ```
+3. Add babel-loader configuration to webpack.common.js to compile .ts file, also change the entry configuration
+    ```javascript
+    const config = {
+        entry: './src/app.ts',
+        ...
+    	resolve: {
+	        extensions: ['.ts', '.tsx', '.js', '.json']
+	    },
+	    module: {
+	        rules: [
+	            {
+	                // Include ts, tsx, js, and jsx files.
+	                test: /\.(ts|js)x?$/,
+	                exclude: /node_modules/,
+	                loader: 'babel-loader', 
+	            }
+	        ]
+        }
+    }
+    ```
+
+4. Rename ./src/app.js to ./src/app.ts to start typescript coding
+5. How to use third-party javascript libraries?
+Typescript needs to know the types of all objects in third party libraries, so we need to install their type definition, available type definitions can be seen here: https://www.npmjs.com/~types
+
+    For example, to use JQuery:
+    ```bash
+     npm install @types/jquery
+    ```
+    
+## STEP-6: Add application configurations
 1. Use this web site to get such configuration: https://createapp.dev/webpack
