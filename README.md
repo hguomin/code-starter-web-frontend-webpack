@@ -128,5 +128,33 @@ The web frontend starter project with webpack and typescript
     it use the 'webpack serve' to start webpack-dev-server
 4. Run 'npm run debug' to start, it will open localhost:8888 automatically in browser
 
-## SETP-4: Add application configurations
+## STEP-4: Generate the index.html with "html-webpack-plugin" based on the source html template
+1. Install html-webpack-plugin plugin
+    ```bash
+    npm install html-webpack-plugin --save-dev
+    ```
+2. Add below configuration section to webpack.common.js
+    ```javascript
+    const HtmlWebpackPlugin = require('html-webpack-plugin');
+    const config = {
+        ...
+    	plugins: [
+	        new HtmlWebpackPlugin({
+	            template: './src/index.html',
+	            filename: 'index.html',
+	            title: 'Code starter for web frontend',
+	            inject: 'body',
+	    }),
+        ...
+    ]
+    ```
+
+3. Put the index.html file from ./dist folder to the ./src folder
+4. Delete below line from index.html, this will be automatically injected by the plugin "html-webpack-plugin"
+    ```html
+    <script src="app.bundle.js"></script>
+    ```
+5. Run 'npm build' commond will generate both of the app.bundle.js and index.html as output files
+
+## STEP-5: Add application configurations
 1. Use this web site to get such configuration: https://createapp.dev/webpack
