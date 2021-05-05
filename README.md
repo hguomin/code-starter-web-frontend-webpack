@@ -263,5 +263,102 @@ Examples:
 
     that's it!
 
-2. 
+2. VUE
 
+    Install vue and its dev tools:
+    ```bash
+    npm install vue --save
+    npm install vue-loader vue-template-compiler --save-dev
+    ```
+
+    Add a file named App.vue to ./src as below:
+    ```vue
+    <template>
+        <div>
+            <h1>
+            {{name}}
+            </h1>
+        </div>
+    </template>
+
+    <script lang="ts">
+        import Vue from "vue";
+
+        export default Vue.extend({
+            data: function() {
+                return {
+                    name: 'Hello World!',
+                }
+            },
+        });
+    </script>
+    ```
+
+    Add below content to app.ts:
+    ```typescript
+    import Vue from 'vue';
+    import App from './App';
+
+    new Vue({
+        el: '#app',
+        render: h => h(App),
+    });
+    ```
+
+    Add a new webpack configuration file named webpack.vue.js, copy and paste contents from webpack.common.js into it, now we will modify this file for vue
+    
+    Add or modify configurations as below:
+    ```javascript
+    const VueLoaderPlugin = require('vue-loader/lib/plugin');
+    const config = {
+        ...
+        module: {
+            rules: [
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader',
+                },
+                {
+                    test: /\.(ts|js)x?$/,
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-env',
+                            [
+                                '@babel/preset-typescript',
+                                {
+                                    allExtensions: true,
+                                },
+                            ],
+                        ]
+                    }
+                }
+            ]
+        },
+        plugins: [
+            // make sure to include the plugin!
+            new VueLoaderPlugin(),
+            ...
+        ],
+    ```
+
+    Use webpack.vue.js in webpack.config.js as below
+    ```javascript
+    const common = require("./webpack.common");
+    const vue = require("./webpack.vue");
+    const { merge } = require("webpack-merge");
+
+    /*
+    *env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true }
+    *argv, all cli arguments: { mode: 'development', env: { WEBPACK_BUNDLE: true, WEBPACK_BUILD: true } }
+    */
+    module.exports = function(env, argv) {
+        if(typeof argv.mode === 'undefined') {
+            console.log('please specify the \'mode\' argument like \'--mode=production\'');
+            return null;
+        }
+
+        //return merge(common, require(`./webpack.${argv.mode}`));
+        return merge(vue, require(`./webpack.${argv.mode}`));
+    };
+    ```
