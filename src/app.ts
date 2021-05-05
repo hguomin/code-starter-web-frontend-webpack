@@ -1,3 +1,2 @@
-window.onload = function(){
-    document.write("hello world...");
-}
+import styles from  './styles.scss'
+console.log(styles.toString());

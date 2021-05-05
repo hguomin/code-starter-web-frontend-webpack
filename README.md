@@ -199,4 +199,69 @@ Typescript needs to know the types of all objects in third party libraries, so w
     ```
     
 ## STEP-6: Add application configurations
-1. Use this web site to get such configuration: https://createapp.dev/webpack
+Use this web site to get such configuration: https://createapp.dev/webpack
+
+Examples:
+1. SCSS
+
+    Install tools
+    ```
+    npm install --save-dev node-sass sass-loader css-loader style-loader
+    ```
+
+    Add below configuration to webpack.common.js
+    ```javascript
+    const config = {
+        ...
+        module: {
+            rules: [
+                ...
+                {
+                    test: /\.scss$/,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                }
+            ]
+        }
+    };
+    ```
+
+    Add a file named styles.scss in ./src as below:
+    ```css
+    $primary-color: white;
+    $bg: black;
+    h1 {
+        color: $primary-color;
+        background-color: $bg;
+    }
+    ```
+
+    Change ./src/index.html as below:
+    ```html
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Empty project</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <div id="app">
+                <h1>Hello Vue!</h1>
+            </div>
+            <!--script src="app.bundle.js"></script-->
+        </body>
+    </html>
+    ```
+
+    Import styles.scss in app.ts
+    ```typescript
+    import styles from  './styles.scss'
+    ```
+
+    that's it!
+
+2. 
+
